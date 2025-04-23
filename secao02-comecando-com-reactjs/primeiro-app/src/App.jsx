@@ -1,17 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [input, setInput] = useState("");
   const [tarefas, setTarefas] = useState([
-    'Pagar a conta de  luz',
-    'estudar react js'
+    'estudar javascript',
+    'estudar mongodb'
   ]);
 
-  function handleRegister(e) {
-    e.preventDefault()
+  // component did mount
+  useEffect(() => {
+    const tarefasStorage = localStorage.getItem("@tarefa");
 
-    setTarefas([...tarefas, input])
-    setInput('');
+    if (tarefasStorage) {
+      setTarefas(JSON.parse(tarefasStorage));
+    }
+  }, []);
+
+  //update
+  useEffect(() => {
+    localStorage.setItem("@tarefa", JSON.stringify(tarefas));
+  }, [tarefas]);
+
+  function handleRegister(e) {
+    e.preventDefault();
+
+    setTarefas([...tarefas, input]);
+    setInput("");
   }
 
   return (
@@ -28,12 +42,9 @@ function App() {
         <br />
 
         <button type="submit">Registrar</button>
-        
         <br />
-        <br />
-
         <ul>
-          {tarefas.map(tarefa => (
+          {tarefas.map((tarefa) => (
             <li key={tarefa}>{tarefa}</li>
           ))}
         </ul>
