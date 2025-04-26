@@ -1,56 +1,32 @@
-import { useState, useEffect } from "react";
+import ListaTarefas from "./components/ListaTarefas";
+//import "./App.css";
+import {BemVindo, Container, Head} from "./styles";
 
 function App() {
-  const [input, setInput] = useState("");
-  const [tarefas, setTarefas] = useState([
-    'estudar javascript',
-    'estudar mongodb'
-  ]);
-
-  // component did mount
-  useEffect(() => {
-    const tarefasStorage = localStorage.getItem("@tarefa");
-
-    if (tarefasStorage) {
-      setTarefas(JSON.parse(tarefasStorage));
-    }
-  }, []);
-
-  //update
-  useEffect(() => {
-    localStorage.setItem("@tarefa", JSON.stringify(tarefas));
-  }, [tarefas]);
-
-  function handleRegister(e) {
-    e.preventDefault();
-
-    setTarefas([...tarefas, input]);
-    setInput("");
-  }
-
   return (
-    <div>
-      <h1>Cadastrando usuário</h1>
-      <form onSubmit={handleRegister}>
-        <label htmlFor="">Nome da tarefa:</label>
-        <br />
-        <input
-          placeholder="Digite uma tarefa"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <br />
+    //<ListaTarefas />;
+    <Container>
+      <Head>
+        <a href="">Projeto Styled</a>
+      </Head>
 
-        <button type="submit">Registrar</button>
-        <br />
-        <ul>
-          {tarefas.map((tarefa) => (
-            <li key={tarefa}>{tarefa}</li>
-          ))}
-        </ul>
-      </form>
-    </div>
+      <BemVindo cor="00ff00" tamanho={15}>Bem vindo ao sistema!</BemVindo>
+
+    </Container>
   );
 }
 
 export default App;
+
+
+/**
+ *   <div className="container">
+      <header className="header">
+        <a className="titulo" href="">
+          Projeto Styled
+        </a>
+      </header>
+
+      <h1>Bem vindo ao sistema!</h1>
+    </div>
+ */
