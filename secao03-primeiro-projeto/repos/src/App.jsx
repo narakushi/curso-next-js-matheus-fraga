@@ -1,14 +1,17 @@
-import './App.css'
-import Router from './router';
+import "./App.css";
+import Router from "./router";
+
+import GlobalStyle from "./styles/global";
 
 //https://api.github.com/
 
 function App() {
   return (
-    <div>
+    <>
+      <GlobalStyle />
       <Router />
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;
