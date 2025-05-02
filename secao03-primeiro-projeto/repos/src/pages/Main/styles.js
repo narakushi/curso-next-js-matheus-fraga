@@ -1,4 +1,4 @@
-import styled, {keyframes, css} from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const Container = styled.div`
 max-width: 700px;
@@ -28,11 +28,12 @@ flex-direction: row;
 
 input {
   flex: 1;
-  border: 1px solid #ddd;
+  border: 1px solid ${props => (props.err ? "#f00" : "#ddd")};
   padding: 10px 15px;
   border-radius: 4px;
   font-size: 17px;
 }
+
 `;
 
 //Criando animação fo botão
@@ -65,9 +66,8 @@ export const SubmitButton = styled.button.attrs(props => (
     opacity: 0.5;
   }
 
-  ${
-    props => props.loading && 
-    css `
+  ${props => props.loading &&
+    css`
       svg {
         animation: ${animate} 2s linear infinite;
       }
@@ -75,7 +75,7 @@ export const SubmitButton = styled.button.attrs(props => (
   }
 `;
 
-export const List = styled.ul `
+export const List = styled.ul`
   list-style: none;
   margin-top: 20px;
   padding: 0;
