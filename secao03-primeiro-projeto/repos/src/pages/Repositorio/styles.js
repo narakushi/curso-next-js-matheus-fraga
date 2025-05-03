@@ -130,6 +130,27 @@ export const PageActions = styled.div`
       opacity: .5;
     }
   }
+`;
 
+export const StateButton = styled.div`
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+
+  button {
+    background: #0d2236;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    outline: 0;
+    border: 0;
+    border-radius: 4px;
+    padding: 8px;
+
+    &:nth-child(${props => props.active + 1}) {
+      background: #0071db;
+    }
+  }
 
 `;

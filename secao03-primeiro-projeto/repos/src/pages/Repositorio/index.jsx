@@ -6,6 +6,7 @@ import {
   BackButton,
   IssuesList,
   PageActions,
+  StateButton,
 } from "./styles";
 import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
@@ -18,6 +19,11 @@ export default function Repositorio() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [stateBtn, setStateBtn] = useState("open");
+
+  const handleChangeState = (state) => {
+    setStateBtn(state);
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -30,7 +36,7 @@ export default function Repositorio() {
         api.get(`/repos/${nomeRepo}`),
         api.get(`/repos/${nomeRepo}/issues`, {
           params: {
-            state: "open",
+            state: stateBtn,
             per_page: 5,
           },
         }),
@@ -46,7 +52,7 @@ export default function Repositorio() {
     };
 
     load();
-  }, [repositorio]);
+  }, [repositorio, stateBtn]);
 
   useEffect(() => {
     const nomeRepo = repositorio;
@@ -89,6 +95,12 @@ export default function Repositorio() {
         <h1>{repo.name}</h1>
         <p>{repo.description}</p>
       </Owner>
+
+      <StateButton>
+        <button onClick={() => handleChangeState("open")}>Abertas</button>
+        <button onClick={() => handleChangeState("closed")}>Fechadas</button>
+        <button onClick={() => handleChangeState("all")}>Todas</button>
+      </StateButton>
 
       <IssuesList>
         {issues.map((issue) => (
