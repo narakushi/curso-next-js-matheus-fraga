@@ -19,10 +19,16 @@ export default function Repositorio() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [stateBtn, setStateBtn] = useState("open");
+  const [stateBtns, setStateBtns] = useState([
+    { title: "Aberta", state: "open", active: true },
+    { title: "Fechada", state: "closed", active: false },
+    { title: "Todas", state: "all", active: false },
+  ]);
 
-  const handleChangeState = (state) => {
-    setStateBtn(state);
+  const [btnIndex, setBtnIndex] = useState(0);
+
+  const handleChangeIndex = (index) => {
+    setBtnIndex(index);
   };
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export default function Repositorio() {
         api.get(`/repos/${nomeRepo}`),
         api.get(`/repos/${nomeRepo}/issues`, {
           params: {
-            state: stateBtn,
+            state: stateBtns.find((btn) => btn.active).state,
             per_page: 5,
           },
         }),
@@ -44,15 +50,12 @@ export default function Repositorio() {
 
       setRepo(respositoriosData.data);
 
-      console.log(repo);
-
       setIssues(issuesData.data);
-      console.log(issues);
       setLoading(false);
     };
 
     load();
-  }, [repositorio, stateBtn]);
+  }, [repositorio, stateBtns]);
 
   useEffect(() => {
     const nomeRepo = repositorio;
@@ -60,7 +63,7 @@ export default function Repositorio() {
     const loadingIssue = async () => {
       const response = await api.get(`/repos/${nomeRepo}/issues`, {
         params: {
-          state: "open",
+          state: stateBtns[btnIndex].state,
           page,
           per_page: 5,
         },
@@ -71,7 +74,7 @@ export default function Repositorio() {
 
     loadingIssue();
     console.log(`/repos/${repositorio}/issues`);
-  }, [page]);
+  }, [stateBtns, btnIndex, page]);
 
   const handlePage = (action) => {
     setPage(action === "back" ? page - 1 : page + 1);
@@ -96,10 +99,12 @@ export default function Repositorio() {
         <p>{repo.description}</p>
       </Owner>
 
-      <StateButton>
-        <button onClick={() => handleChangeState("open")}>Abertas</button>
-        <button onClick={() => handleChangeState("closed")}>Fechadas</button>
-        <button onClick={() => handleChangeState("all")}>Todas</button>
+      <StateButton active={btnIndex}>
+        {stateBtns.map((btn, index) => (
+          <button key={btn.title} onClick={() => handleChangeIndex(index)}>
+            {btn.title}
+          </button>
+        ))}
       </StateButton>
 
       <IssuesList>
