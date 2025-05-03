@@ -6,7 +6,7 @@ background: #fff;
 border-radius: 4px;
 box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 padding: 30px;
-margin: 80px;
+margin: 80px auto;
 
 h1 {
   font-size: 20px;
