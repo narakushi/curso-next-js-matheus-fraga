@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../styles/home.module.css";
+import styles from "@/styles/home.module.css";
 import Image from "next/image";
 import heroImg from "../../public/assets/hero.png";
 
@@ -20,18 +20,9 @@ export default function Home() {
           />
         </div>
         <h1 className={styles.title}>
-          Sistemas feito para você organizar <br />
+          Sistema feito para você organizar <br />
           seus estudos e tarefas
         </h1>
-
-        <div className={styles.infoContent}>
-          <section className={styles.box}>
-            <span>+12 posts</span>
-          </section>
-          <section className={styles.box}>
-            <span>+90 comentários</span>
-          </section>
-        </div>
       </main>
     </div>
   );
